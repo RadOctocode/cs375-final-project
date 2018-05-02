@@ -1,12 +1,26 @@
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <string>
 
+struct edge{
+	int weight,dest;
+
+	edge(){
+
+	}
+
+	edge(int weight_,int dest_){
+		weight=weight_;
+		dest=dest_;
+	}
+	
+};
 
 struct node{
 	int node_num;
-	std::vector<int> edges;
+	std::vector<edge> edges;
 
 	node(){
 		node_num=0;
@@ -16,7 +30,7 @@ struct node{
 		node_num=id;
 	}
 
-	node(int id, std::vector<int> edges_){
+	node(int id, std::vector<edge> edges_){
 		node_num=id;
 		edges=edges_;
 		
@@ -24,20 +38,13 @@ struct node{
 
 };
 
-void add_edge(node node_,int edge_){
-	bool added=false
-	for(auto edge:node_.edges){
-		if(edge==edge_){
-			added=true;
-		}
+void print_edgelist(node node_){
+	for (auto x:node_.edges){
+		printf("transition:%d %d \n",x.dest,x.weight);
 	}
-
-	if(!added){
-		node_.edges.push_back(edge_);
-	}
-
 
 }
+
 
 std::vector<node> make_graph(std::string file_name){
 	//format of numbers 
@@ -45,25 +52,32 @@ std::vector<node> make_graph(std::string file_name){
 	std::vector<node> retval;
 	std::ifstream my_file(file_name);
     std::stringstream buffer;
+    int total_nodes=0;
 
     if (my_file.is_open()){
         buffer<<my_file.rdbuf();
         my_file.close();
     }
 
-    while(buffer){
+    buffer>>total_nodes;
+    
+    for (int i = 0; i < total_nodes; ++i){
+ 
 		int node_id,numb_edg;
-        buffer>>node_id>>numb_edg;
+        buffer>>node_id;
         node current_node=node(node_id);
 
-        for(int i=0;i<numb_edg;i++){
-        	int edg;
-        	buffer>>edg;
-        	add_edge(current_node,edg);
+        for(int j=0;j<total_nodes;++j){
+        	int edg,weight;
+        	buffer>>edg>>weight;
+        	edge current_edge=edge(weight,edg);
+        	current_node.edges.push_back(current_edge);
+        	//print_edgelist(current_node);
         }
     	retval.push_back(current_node);
     }
 
     return retval;
 
-}
+};
+
