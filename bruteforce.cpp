@@ -24,6 +24,7 @@ std::vector<int> solution_brute(int start,Graph graph_){
     std::vector<int> node_list;
     std::vector<int> ret_val;
     int smallest_dist;
+    int num_perm=0;
     for(int i=0;i<graph_.size();++i){
         node_list.push_back(i);
     }
@@ -39,7 +40,9 @@ std::vector<int> solution_brute(int start,Graph graph_){
             smallest_dist=elavtuate_path(node_list,graph_);
             ret_val=node_list;
         }
+        num_perm++;
     }while(std::next_permutation(node_list.begin(), node_list.begin()+node_list.size()));
 
+    printf("number of permutations %d\n",num_perm);
     return ret_val;
 }
