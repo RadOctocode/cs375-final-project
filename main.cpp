@@ -1,4 +1,5 @@
-#include "utility.hpp"
+//#include "utility.hpp"
+#include "bruteforce.cpp"
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -6,11 +7,12 @@
 
 int main(int argc,char **argv){   
     Graph graph = make_graph(argv[1]);
+  
+    solution_brute(graph);
 
-    //for(auto node_:graph){
-        //printf("node_id:%d \n",node_.node_num);
-        //print_edgelist(node_);
-    //}    
 
     return 0;
 }
+
+
+
