@@ -10,7 +10,7 @@ using Graph = std::vector<std::vector<int>>;
 
 //state::state() = default;
 bool state::operator<(const state& other) const{
-    return bound < other.bound;
+    return bound > other.bound;
 }
 
 

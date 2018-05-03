@@ -18,27 +18,42 @@ int calculate_val(const state& s, const Graph& g){
     int total = 0;
     for(int i = 0; i < s.order_visited.size(); i++){
         if(i == s.order_visited.size()-1)
-            continue;
-        total += g[s.order_visited[i]][s.order_visited[i+1]];
+            total += g[s.order_visited[i]][s.node];
+        else
+            total += g[s.order_visited[i]][s.order_visited[i+1]];
     }
     return total;
 }
 
-int calculate_bound(const state& s,Graph& g){
+int min_unvisited(const state& s, const Graph& g, int rownum){
+    auto row = g[rownum];
+    int min = INT_MAX;
+    for(int i = 0; i < row.size(); i++){
+        //row of node being consided
+        if(rownum == s.node){
+            if(s.visited.count(i) != 0 || i == 0)
+                continue;
+        }
+        //exclude current node column and any visited column
+        else if(s.visited.count(i) != 0 && i != 0 || i == s.node){
+            continue;
+        }
+        if(row[i] < min)
+            min = row[i];
+    }
+    return min;
+}
+
+int calculate_bound(const state& s, const Graph& g){
     int bound = 0;
     for (int i = 0; i < g.size(); ++i) {
-        //g[i][s.node] = INT_MAX;
         if(!s.visited.count(i)){
-            //for(int j = 0; j < g[0].size(); j++)
-                //printf("%d ", g[i][j]);
-            //printf("\n");
-            //bound += *std::min_element(g[i].begin(), g[i].end(), compare);
-            //printf("%d\n", *std::min_element(g[i].begin(), g[i].end(), compare));
-            bound += *std::min_element(g[i].begin(), g[i].end());
+            bound += min_unvisited(s, g, i);
+            //printf("%d ", min_unvisited(s, g, i));
         }
     }
+    //printf("\n%d, %d\n", bound, calculate_val(s, g));
     return bound + calculate_val(s, g);
-    //return bound;
 }
 
 //returns a list of nodes indicating the path
@@ -59,10 +74,15 @@ std::vector<int> bestfirst(Graph g){
         curr = states.top();
         states.pop();
 
-        if(curr.visited.size() == g.size() && !curr.done){
-            curr.visited.erase(0);
-            curr.done = true;
+        if(curr.node != 0 || curr.visited.size() == g.size()){
+            curr.visited.insert(curr.node);
+            curr.order_visited.push_back(curr.node);
         }
+
+        //if(curr.visited.size() == g.size() && !curr.done){
+            //curr.visited.erase(0);
+            //curr.done = true;
+        //}
 
         //DEBUG PRINTING
         //printf("node considered: %d\n", curr.node);
@@ -74,9 +94,13 @@ std::vector<int> bestfirst(Graph g){
 
         //check if current better than best
         if(curr.val < best.val && curr.visited.size() == g.size()){
+            //curr.visited.insert(curr.node);
+            //printf("TEST\n");
+            curr.order_visited.push_back(0);
             best = curr;
+            //curr.order_visited.push_back(curr.node);
+            continue;
         }
-
         //check unfeasible here
         if(curr.bound > best.val || curr.visited.size() == g.size()){
             leaves++;
@@ -84,12 +108,14 @@ std::vector<int> bestfirst(Graph g){
         }
 
         for (int i = 0; i < g.size(); ++i) {
+            if(i == 0 && curr.visited.size() != g.size())
+                continue;
             if(curr.visited.count(i) == 0){
                 //create and add child state
                 state child = curr;
                 child.node = i;
-                child.visited.insert(i);
-                child.order_visited.push_back(i);
+                //child.visited.insert(i);
+                //child.order_visited.push_back(i);
                 child.bound = calculate_bound(child, g);
                 child.val = calculate_val(child, g);
                 states.push(child);

@@ -34,7 +34,7 @@ int main(int argc,char **argv){
         total += graph[bruteforcepath[i]][bruteforcepath[i+1]];
     }
     std::cout << "\ntotal: " << total << "\n";
-    std::cout << "time: " << elapsed_secs << "\n";
+    std::cout << "time: " << elapsed_secs << "\n\n";
 
 
     //BEST FIRST
