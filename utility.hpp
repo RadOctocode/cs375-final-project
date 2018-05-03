@@ -9,33 +9,8 @@
 
 using Graph = std::vector<std::vector<int>>;
 
-struct edge{
-    int weight = 0, dest = 0;
 
-    edge() = default;
-    edge(int weight_,int dest_){
-        weight=weight_;
-        dest=dest_;
-    }
-};
-
-struct node{
-    int node_num = 0;
-    std::vector<edge> edges;
-
-    node() = default;
-    node(int id){
-        node_num=id;
-    }
-    node(int id, std::vector<edge> edges_){
-        node_num=id;
-        edges=edges_;
-        
-    }
-
-};
-
-struct state{
+/*struct state{
     std::unordered_set<int> visited;
     int bound, node;
 
@@ -43,20 +18,26 @@ struct state{
     bool operator<(const state& other) const{
         return bound < other.bound;
     }
-};
+};*/
 
-void print_edgelist(node node_){
-    for (auto x:node_.edges){
-        printf("transition:%d %d \n",x.dest,x.weight);
-    }
+void print_edgelist(Graph graph_){
+    for (int i = 0; i < graph_.size(); ++i){
+        std::cout<<"node "<<i<<'\n';
+        
+        for(int j=0;j<graph_[i].size();++j){
+            std::cout<<'\t'<<"weight "<<graph_[i][j]<<" to dest "<<j<<'\n';
+        }
+
+        std::cout<<"\n";
+       
+    }    
 
 }
 
 
-std::vector<node> make_graph(std::string file_name){
-    //format of numbers 
-    // id numb_edg edg edg edg
-    std::vector<node> retval;
+Graph make_graph(std::string file_name){
+    //adjaency matrix
+    Graph retval;
     std::ifstream my_file(file_name);
     std::stringstream buffer;
     int total_nodes=0;
@@ -67,25 +48,26 @@ std::vector<node> make_graph(std::string file_name){
     }
 
     buffer>>total_nodes;
+    //retval.reserve(total_nodes);
+    for (int i = 0; i < total_nodes; ++i){
+        std::vector<int> v;    
+        retval.push_back(v); 
+       
+    }
     
     for (int i = 0; i < total_nodes; ++i){
  
-        int node_id,numb_edg;
-        buffer>>node_id;
-        node current_node=node(node_id);
-
-        for(int j=0;j<total_nodes;++j){
-            int edg,weight;
-            buffer>>edg>>weight;
-            edge current_edge=edge(weight,edg);
-            current_node.edges.push_back(current_edge);
-            //print_edgelist(current_node);
+        for(int j=0;j < total_nodes;++j){
+            
+            int current_weight=0;
+            buffer>>current_weight;
+            retval[i].push_back(current_weight);     
         }
-        retval.push_back(current_node);
+       
     }
 
     return retval;
 
 };
 
-#endif /* ifndef SYMBOL */
+#endif 
