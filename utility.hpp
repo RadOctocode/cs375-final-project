@@ -10,7 +10,7 @@
 using Graph = std::vector<std::vector<int>>;
 
 
-/*struct state{
+struct state{
     std::unordered_set<int> visited;
     int bound, node, val = 0;
 
@@ -18,7 +18,7 @@ using Graph = std::vector<std::vector<int>>;
     bool operator<(const state& other) const{
         return bound < other.bound;
     }
-};*/
+};
 
 void print_edgelist(Graph graph_){
     for (int i = 0; i < graph_.size(); ++i){
