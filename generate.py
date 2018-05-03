@@ -1,7 +1,7 @@
 import random
 
 def write_file(graph, path):
-    with open(path, 'w+') as f:
+    with open('files/' + path, 'w+') as f:
         f.write(str(len(graph)) + '\n')
         for row in graph:
             for weight in row:

@@ -7,6 +7,8 @@
 #include <sstream>
 #include <string>
 
+using Graph = std::vector<std::vector<int>>;
+
 struct edge{
     int weight = 0, dest = 0;
 
@@ -34,10 +36,13 @@ struct node{
 };
 
 struct state{
-    std::vector<int> visited;
+    std::unordered_set<int> visited;
     int bound, node;
 
     state() = default;
+    bool operator<(const state& other) const{
+        return bound < other.bound;
+    }
 };
 
 void print_edgelist(node node_){
