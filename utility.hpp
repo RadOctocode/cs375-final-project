@@ -34,8 +34,8 @@ struct node{
 };
 
 struct state{
-    std::vector<int> nodes;
-    int bound;
+    std::vector<int> visited;
+    int bound, node;
 
     state() = default;
 };

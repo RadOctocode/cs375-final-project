@@ -3,26 +3,22 @@ import random
 def write_file(graph, path):
     with open(path, 'w+') as f:
         f.write(str(len(graph)) + '\n')
-        for i, k in enumerate(graph):
-            f.write(str(i) + '\n')
-            for v in k:
-                f.write(str(v[0]) + ' ')
-                f.write(str(v[1]) + ' ')
+        for row in graph:
+            for weight in row:
+                f.write(str(weight) + ' ')
             f.write('\n')
 
 #returns a list of lists of edges
 def generate_graph(vertices):
-    graph = [[] for i in range(vertices)]
+    graph = [[0 for i in range(vertices)] for j in range(vertices)]
     for i in range(vertices):
         for j in range(i, vertices):
             weight = random.randint(1, 10)
             if j == i:
-                weight = 0
-                graph[i].append((j, weight))
+                graph[i][j] = 0
                 continue
-            graph[i].append((j, weight))
-            graph[j].append((i, weight))
-    # print(graph)
+            graph[i][j] = weight
+            graph[j][i] = weight
     return graph
 
 def main():
