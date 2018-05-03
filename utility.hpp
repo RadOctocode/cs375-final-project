@@ -37,7 +37,7 @@ struct node{
 
 struct state{
     std::unordered_set<int> visited;
-    int bound, node;
+    int bound, node, val = 0;
 
     state() = default;
     bool operator<(const state& other) const{

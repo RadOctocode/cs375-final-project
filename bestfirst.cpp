@@ -23,7 +23,7 @@ int calculate_bound(const state& s, const Graph& g) const{
 //returns a list of nodes indicating the path
 std::vector<node> bestfirst(Graph g){
     std::priority_queue states;
-    state root, curr;
+    state root, curr, best;
 
     root.bound = calculate_bound(root, g);
     states.push(root);
@@ -33,6 +33,9 @@ std::vector<node> bestfirst(Graph g){
         states.pop();
 
         //TODO check unfeasible here
+        if(curr.val > best.val){
+
+        }
 
 
         for (int i = 0; i < g.size(); ++i) {
