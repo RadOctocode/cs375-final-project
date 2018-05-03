@@ -1,4 +1,3 @@
-//#include "utility.cpp"
 #include "utility.hpp"
 
 #include <vector>
@@ -7,20 +6,40 @@
 #include <string>
 #include <algorithm>
 
-std::vector<int> solution_brute(Graph graph_){
+int elavtuate_path(std::vector<int> path_, Graph graph_){
+    int ret_val=0;
+    int next_node=path_[0];
+    for(int i=1;i<path_.size();++i){
+        std::vector<int> start=graph_[next_node];
+        int distance=start[path_[i]];
+        ret_val+=distance;
+        next_node=path_[i];
+    }
+
+    return ret_val;
+}
+
+std::vector<int> solution_brute(int start,Graph graph_){
     // go through every permutation and select the one with the shortest distance
     std::vector<int> node_list;
     std::vector<int> ret_val;
+    int smallest_dist;
     for(int i=0;i<graph_.size();++i){
         node_list.push_back(i);
     }
-    /*do{
-        for(int i =0;i<node_list.size();++i){
-            printf("%d, ",node_list[i]);
-        }
-        printf("\n");
-    }while(std::next_permutation(node_list.begin(), node_list.begin()+node_list.size()));
-*/
-    return ret_val;
+    ret_val=node_list;
+    smallest_dist=elavtuate_path(node_list,graph_);
 
+    do{
+        if(node_list[0]!=start){
+            continue;
+        }
+        //printf("distance %d\n",smallest_dist);
+        else if(elavtuate_path(node_list,graph_)<smallest_dist){
+            smallest_dist=elavtuate_path(node_list,graph_);
+            ret_val=node_list;
+        }
+    }while(std::next_permutation(node_list.begin(), node_list.begin()+node_list.size()));
+
+    return ret_val;
 }
