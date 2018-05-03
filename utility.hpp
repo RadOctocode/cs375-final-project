@@ -10,7 +10,6 @@
 
 using Graph = std::vector<std::vector<int>>;
 
-
 struct state{
     std::unordered_set<int> visited;
     int bound, node, val = 0;
@@ -28,13 +27,11 @@ void print_edgelist(Graph graph_){
         for(int j=0;j<graph_[i].size();++j){
             std::cout<<'\t'<<"weight "<<graph_[i][j]<<" to dest "<<j<<'\n';
         }
-
         std::cout<<"\n";
        
     }    
 
 }
-
 
 Graph make_graph(std::string file_name){
     //adjaency matrix
@@ -57,9 +54,7 @@ Graph make_graph(std::string file_name){
     }
     
     for (int i = 0; i < total_nodes; ++i){
- 
         for(int j=0;j < total_nodes;++j){
-            
             int current_weight=0;
             buffer>>current_weight;
             retval[i].push_back(current_weight);     
@@ -68,7 +63,6 @@ Graph make_graph(std::string file_name){
     }
 
     return retval;
-
 };
 
 #endif 
