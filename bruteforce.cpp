@@ -40,11 +40,12 @@ std::vector<int> solution_brute(int start,Graph graph_){
     smallest_dist=elavtuate_path(node_list,graph_);
 
     do{
-        if(node_list[0]!=start){
-            continue;
+        /*for(auto x:node_list){
+            printf("%d ",x);
         }
-        //printf("distance %d\n",smallest_dist);
-        else if(elavtuate_path(node_list,graph_)<smallest_dist){
+        printf("distance %d \n",elavtuate_path(node_list,graph_));
+        */
+        if(elavtuate_path(node_list,graph_)<smallest_dist){
             smallest_dist=elavtuate_path(node_list,graph_);
             ret_val=node_list;
         }
