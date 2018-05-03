@@ -27,7 +27,7 @@ int calculate_val(const state& s, const Graph& g){
 int calculate_bound(const state& s,Graph& g){
     int bound = 0;
     for (int i = 0; i < g.size(); ++i) {
-        g[i][s.node] = INT_MAX;
+        //g[i][s.node] = INT_MAX;
         if(!s.visited.count(i)){
             //for(int j = 0; j < g[0].size(); j++)
                 //printf("%d ", g[i][j]);
@@ -65,12 +65,12 @@ std::vector<int> bestfirst(Graph g){
         }
 
         //DEBUG PRINTING
-        printf("node considered: %d\n", curr.node);
-        printf("val: %d\n", curr.val);
-        printf("bound: %d\n", curr.bound);
-        for(int i: curr.order_visited)
-            printf("%d ", i);
-        printf("\n");
+        //printf("node considered: %d\n", curr.node);
+        //printf("val: %d\n", curr.val);
+        //printf("bound: %d\n", curr.bound);
+        //for(int i: curr.order_visited)
+            //printf("%d ", i);
+        //printf("\n");
 
         //check if current better than best
         if(curr.val < best.val && curr.visited.size() == g.size()){
@@ -100,30 +100,30 @@ std::vector<int> bestfirst(Graph g){
     return best.order_visited;
 }
 
-int main(int argc, char *argv[]){
-    if(argc != 2){
-        std::cout << "wrong usage\n";
-        return -1;
-    }
-    Graph g = make_graph(argv[1]);
+//int main(int argc, char *argv[]){
+    //if(argc != 2){
+        //std::cout << "wrong usage\n";
+        //return -1;
+    //}
+    //Graph g = make_graph(argv[1]);
 
-    //make 0s max ints for comparison purposes later
-    for (int i = 0; i < g.size(); ++i) {
-        for (int j = 0; j < g[0].size(); ++j) {
-            if(g[i][j] == 0)
-                g[i][j] = INT_MAX;
-        }
-    }
+    ////make 0s max ints for comparison purposes later
+    //for (int i = 0; i < g.size(); ++i) {
+        //for (int j = 0; j < g[0].size(); ++j) {
+            //if(g[i][j] == 0)
+                //g[i][j] = INT_MAX;
+        //}
+    //}
 
-    auto vertices = bestfirst(g);
-    int total = 0;
-    for(int i = 0; i < vertices.size(); i++){
-        std::cout << vertices[i] << ' ';
-        if(i == vertices.size()-1)
-            continue;
-        total += g[vertices[i]][vertices[i+1]];
-    }
-    std::cout << "\ntotal: " << total << "\n";
+    //auto vertices = bestfirst(g);
+    //int total = 0;
+    //for(int i = 0; i < vertices.size(); i++){
+        //std::cout << vertices[i] << ' ';
+        //if(i == vertices.size()-1)
+            //continue;
+        //total += g[vertices[i]][vertices[i+1]];
+    //}
+    //std::cout << "\ntotal: " << total << "\n";
 
-    return 0;
-}
+    //return 0;
+//}

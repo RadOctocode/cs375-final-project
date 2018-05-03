@@ -15,6 +15,7 @@ struct state{
     std::vector<int> order_visited;
     int bound, node, val = 0;
     bool done = false;
+    Graph graph;
 
     state() = default;
     bool operator<(const state& other) const;
