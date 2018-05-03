@@ -1,3 +1,6 @@
+#ifndef UTILITY_H
+#define UTILITY_H value
+
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -28,6 +31,13 @@ struct node{
         
     }
 
+};
+
+struct state{
+    std::vector<int> nodes;
+    int bound;
+
+    state() = default;
 };
 
 void print_edgelist(node node_){
@@ -73,3 +83,4 @@ std::vector<node> make_graph(std::string file_name){
 
 };
 
+#endif /* ifndef SYMBOL */
