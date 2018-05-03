@@ -14,3 +14,6 @@ bruteforce.o: bruteforce.cpp utility.hpp
 
 utility.o: utility.cpp utility.hpp
 	g++ $(FLAGS) utility.cpp -c
+
+clean:
+	rm -f *.o main

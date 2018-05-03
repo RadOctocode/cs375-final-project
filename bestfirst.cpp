@@ -14,6 +14,10 @@ bool compare(const int& a, const int& b){
 }
 
 int calculate_bound(const state& s, const Graph& g){
+    int current = 0;
+    for(int edge: visited){
+
+    }
     int bound = 0;
     for (int i = 0; i < g.size(); ++i) {
         //TODO fix that min elem will always find 0
@@ -38,9 +42,11 @@ std::vector<int> bestfirst(Graph g){
         states.pop();
 
         //TODO check unfeasible here
-        if(curr.val > best.val){
-
+        if(curr.val < best.val ){
+            best = curr;
         }
+
+        if(curr.bound > best.val)
 
 
         for (int i = 0; i < g.size(); ++i) {
