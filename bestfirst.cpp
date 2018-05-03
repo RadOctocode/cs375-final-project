@@ -26,11 +26,7 @@ int calculate_bound(const state& s, const Graph& g){
 }
 
 //returns a list of nodes indicating the path
-<<<<<<< Updated upstream
-std::vector<node> bestfirst(Graph g){
-=======
 std::vector<int> bestfirst(Graph g){
->>>>>>> Stashed changes
     std::priority_queue<state> states;
     state root, curr, best;
 
