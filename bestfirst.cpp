@@ -24,9 +24,10 @@ int calculate_val(const state& s, const Graph& g){
     return total;
 }
 
-int calculate_bound(const state& s, const Graph& g){
+int calculate_bound(const state& s,Graph& g){
     int bound = 0;
     for (int i = 0; i < g.size(); ++i) {
+        g[i][s.node] = INT_MAX;
         if(!s.visited.count(i)){
             //for(int j = 0; j < g[0].size(); j++)
                 //printf("%d ", g[i][j]);
@@ -58,11 +59,16 @@ std::vector<int> bestfirst(Graph g){
         curr = states.top();
         states.pop();
 
+        if(curr.visited.size() == g.size() && !curr.done){
+            curr.visited.erase(0);
+            curr.done = true;
+        }
+
         //DEBUG PRINTING
         printf("node considered: %d\n", curr.node);
         printf("val: %d\n", curr.val);
         printf("bound: %d\n", curr.bound);
-        for(int i: curr.visited)
+        for(int i: curr.order_visited)
             printf("%d ", i);
         printf("\n");
 

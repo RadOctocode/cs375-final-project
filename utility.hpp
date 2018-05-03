@@ -14,6 +14,7 @@ struct state{
     std::unordered_set<int> visited;
     std::vector<int> order_visited;
     int bound, node, val = 0;
+    bool done = false;
 
     state() = default;
     bool operator<(const state& other) const;
