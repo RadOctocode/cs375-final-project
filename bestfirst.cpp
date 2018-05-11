@@ -9,6 +9,7 @@
 #include <climits>
 #include "utility.hpp"
 
+//calculate the value of a path
 int calculate_val(const state& s, const Graph& g){
     int total = 0;
     for(int i = 0; i < s.order_visited.size(); i++){
@@ -20,6 +21,7 @@ int calculate_val(const state& s, const Graph& g){
     return total;
 }
 
+//find min weight in a row excluding current column and visited columns
 int min_unvisited(const state& s, const Graph& g, int rownum){
     auto row = g[rownum];
     int min = INT_MAX;
@@ -39,6 +41,7 @@ int min_unvisited(const state& s, const Graph& g, int rownum){
     return min;
 }
 
+//calculate the minimum bound for a state
 int calculate_bound(const state& s, const Graph& g){
     int bound = 0;
     for (int i = 0; i < g.size(); ++i) {
@@ -50,6 +53,7 @@ int calculate_bound(const state& s, const Graph& g){
 
 //returns a list of nodes indicating the path
 std::vector<int> bestfirst(Graph g){
+    //initialize values
     int nodes = 0, leaves = 0;
     std::priority_queue<state> states;
     state root, curr, best;
@@ -66,18 +70,11 @@ std::vector<int> bestfirst(Graph g){
         curr = states.top();
         states.pop();
 
+        //insert the current state unless it is 0 or the path is full
         if(curr.node != 0 || curr.visited.size() == g.size()){
             curr.visited.insert(curr.node);
             curr.order_visited.push_back(curr.node);
         }
-
-        //DEBUG PRINTING
-        printf("node considered: %d\n", curr.node);
-        printf("val: %d\n", curr.val);
-        printf("bound: %d\n", curr.bound);
-        for(int i: curr.order_visited)
-            printf("%d ", i);
-        printf("\n");
 
         //check if current better than best and path is fully made
         if(curr.val < best.val && curr.visited.size() == g.size()){
@@ -91,6 +88,7 @@ std::vector<int> bestfirst(Graph g){
             continue;
         }
 
+        //explore all child states
         for (int i = 0; i < g.size(); ++i) {
             if(i == 0 && curr.visited.size() != g.size())
                 continue;
